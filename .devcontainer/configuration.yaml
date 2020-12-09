@@ -14,5 +14,6 @@ sensor:
           - S-Bahn
 
   - platform: sbahn_munich
+    limit: 3
     stations:
       - München-Pasing

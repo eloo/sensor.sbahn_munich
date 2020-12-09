@@ -3,7 +3,7 @@
 NAME = "SBahn Munich"
 DOMAIN = "sbahn_munich"
 DOMAIN_DATA = f"{DOMAIN}_data"
-VERSION = "0.0.1"
+VERSION = "0.0.2"
 
 # Icons
 ICON = "mdi:train"
@@ -16,6 +16,7 @@ PLATFORMS = [SENSOR]
 CONF_STATIONS = "stations"
 CONF_STATION_UICS = "stations_uics"
 CONF_LINES = "lines"
+CONF_LIMIT = "limit"
 CONF_API_KEY = "apikey"
 CONF_WS_TIMEOUT = "ws_timeout"
 
@@ -24,6 +25,7 @@ DEFAULT_NAME = DOMAIN
 DEFAULT_API_ENDPOINT_TPL = "wss://api.geops.io/realtime-ws/v1/?key={}"
 DEFAULT_API_KEY = "5cc87b12d7c5370001c1d655306122aa0a4743c489b497cb1afbec9b"
 DEFAULT_WS_TIMEOUT = 0.5
+DEFAULT_LIMIT = 5
 
 # API commands
 CMG_GET_HEALTHCHECK = "GET healthcheck"

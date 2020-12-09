@@ -76,7 +76,7 @@ class Timetable:
                 second=0, microsecond=0
             )
         value["raw_time"] = value["time"].total_seconds()
-        value["time"] = (value["time"].total_seconds() // 60) % 60
+        value["time"] = value["time"].total_seconds() / 60
         value["product"] = "S-Bahn"
         value["updated_at"] = self.kwargs["updated_at"]
         return value

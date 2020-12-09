@@ -1,3 +1,4 @@
+from custom_components.sbahn_munich.const import DEFAULT_LIMIT
 from datetime import date, datetime
 import json
 
@@ -7,7 +8,7 @@ from custom_components.sbahn_munich.api import Timetable, Station
 
 def test_device_state_attributes():
     station = Station("testStation", [], "1235")
-    entity = SBahnStation(station, None, None, None)
+    entity = SBahnStation(station, None, None, None, DEFAULT_LIMIT)
 
     line_dict = {
         "name": "S3",

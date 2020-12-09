@@ -11,6 +11,8 @@ import homeassistant.helpers.config_validation as cv
 from homeassistant.components.sensor import PLATFORM_SCHEMA
 from . import api
 from .const import (
+    CONF_LIMIT,
+    DEFAULT_LIMIT,
     ICON,
     DOMAIN,
     CONF_API_KEY,
@@ -28,6 +30,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
         vol.Optional(CONF_WS_TIMEOUT, default=DEFAULT_WS_TIMEOUT): cv.positive_float,
         vol.Optional(CONF_API_KEY, default=DEFAULT_API_KEY): cv.string,
         vol.Optional(CONF_LINES, default=[]): cv.ensure_list,
+        vol.Optional(CONF_LIMIT, default=DEFAULT_LIMIT): cv.positive_int,
     }
 )
 
@@ -44,6 +47,7 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
     api_key = config.get(CONF_API_KEY)
     lines = config.get(CONF_LINES)
     timeout = config.get(CONF_WS_TIMEOUT)
+    limit = config.get(CONF_LIMIT)
 
     uri = DEFAULT_API_ENDPOINT_TPL.format(api_key)
 
@@ -58,13 +62,15 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
     api.close_websocket(ws)
 
     # Add devices
-    add_entities(SBahnStation(station, lines, uri, timeout) for station in stations)
+    add_entities(
+        SBahnStation(station, lines, uri, timeout, limit) for station in stations
+    )
 
 
 class SBahnStation(Entity):
     """Representation of a sbahn station sensor."""
 
-    def __init__(self, station, lines, uri, timeout):
+    def __init__(self, station, lines, uri, timeout, limit):
         """Initialize the sensor."""
         self._name = station.name
         self._state = None
@@ -74,6 +80,7 @@ class SBahnStation(Entity):
         self._timetable = None
         self._uri = uri
         self._timeout = timeout
+        self._limit = limit
 
     @property
     def name(self):
@@ -94,11 +101,15 @@ class SBahnStation(Entity):
         attr = {}
         attr["station"] = self._name
         departures = map(lambda x: x.sensor_attributes(), timetables)
-        departures = list(filter(lambda x: x["raw_time"] >= 0, departures))
+        departures = list(
+            filter(
+                lambda x: x["raw_time"] is not None and x["raw_time"] >= 0, departures
+            )
+        )
+        limit = min(len(departures), self._limit)
         attr["departures"] = sorted(
             departures, key=itemgetter("raw_time", "updated_at")
-        )[:10]
-        # attr["departures"] = sorted(departures, key=lambda x: x["departure"])[:10]
+        )[:limit]
         return attr
 
     @property

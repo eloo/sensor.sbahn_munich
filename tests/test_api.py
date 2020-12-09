@@ -20,14 +20,14 @@ def test_get_stations():
     uri = DEFAULT_API_ENDPOINT_TPL.format(DEFAULT_API_KEY)
     ws = open_websocket(uri, DEFAULT_WS_TIMEOUT)
     stations = get_stations(ws)
-    assert len(stations) == 149
+    assert len(stations) == 151
     assert stations[0].name == "Starnberg Nord"
     assert stations[0].uic == 8005675
 
     # TODO: Need to mock response from server
-    assert stations[10].name == "Geltendorf"
-    assert stations[10].uic == 8000119
-    assert len(stations[10].network_lines) == 2
+    assert stations[10].name == "München Hackerbrücke"
+    assert stations[10].uic == 8004129
+    assert len(stations[10].network_lines) == 7
 
 
 @freeze_time("2020-12-07 21:09:01")
