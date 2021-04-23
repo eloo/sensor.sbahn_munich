@@ -10,6 +10,8 @@
     "@eloo"
   ],
   "requirements": [
-    "websockets==8.1"
+    "websockets==8.1",
+    "freezegun==1.1.0"
+    "websocket-client==0.58.0"
   ]
 }
