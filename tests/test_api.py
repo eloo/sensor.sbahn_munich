@@ -20,7 +20,7 @@ def test_get_stations():
     uri = DEFAULT_API_ENDPOINT_TPL.format(os.environ['API_KEY'])
     ws = open_websocket(uri, DEFAULT_WS_TIMEOUT)
     stations = sorted(get_stations(ws), key=lambda station: station.uic)
-    assert len(stations) == 151
+    assert len(stations) == 224
     assert stations[0].name == "Geltendorf"
     assert stations[0].uic == 8000119
 
