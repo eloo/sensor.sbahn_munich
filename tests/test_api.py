@@ -26,7 +26,7 @@ def test_get_stations():
 
     # TODO: Need to mock response from server
     assert stations[10].name == "Aufhausen(b Erding)"
-    assert stations[10].uic == 8000785
+    assert stations[10].uic == 8000653
     assert len(stations[10].network_lines) == 2
 
 
