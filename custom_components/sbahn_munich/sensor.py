@@ -27,8 +27,8 @@ from .const import (
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {
         vol.Required(CONF_STATIONS): cv.ensure_list,
+        vol.Required(CONF_API_KEY): cv.string,
         vol.Optional(CONF_WS_TIMEOUT, default=DEFAULT_WS_TIMEOUT): cv.positive_float,
-        vol.Optional(CONF_API_KEY, default=DEFAULT_API_KEY): cv.string,
         vol.Optional(CONF_LINES, default=[]): cv.ensure_list,
         vol.Optional(CONF_LIMIT, default=DEFAULT_LIMIT): cv.positive_int,
     }
