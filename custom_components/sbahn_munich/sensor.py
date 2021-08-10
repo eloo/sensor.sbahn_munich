@@ -20,7 +20,6 @@ from .const import (
     CONF_STATIONS,
     CONF_WS_TIMEOUT,
     DEFAULT_API_ENDPOINT_TPL,
-    DEFAULT_API_KEY,
     DEFAULT_WS_TIMEOUT,
 )
 
