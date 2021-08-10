@@ -22,7 +22,7 @@ def test_get_stations():
     stations = sorted(get_stations(ws), key=lambda station: station.uic)
     assert len(stations) == 224
     assert stations[0].name == "Stade"
-    assert stations[0].uic == 8000119
+    assert stations[0].uic == 8000089
 
     # TODO: Need to mock response from server
     assert stations[10].name == "Baldham"
