@@ -21,7 +21,7 @@ def test_get_stations():
     ws = open_websocket(uri, DEFAULT_WS_TIMEOUT)
     stations = sorted(get_stations(ws), key=lambda station: station.uic)
     assert len(stations) == 224
-    assert stations[0].name == "Geltendorf"
+    assert stations[0].name == "Stade"
     assert stations[0].uic == 8000119
 
     # TODO: Need to mock response from server
