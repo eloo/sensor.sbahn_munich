@@ -11,13 +11,12 @@ from custom_components.sbahn_munich.api import (
 
 from custom_components.sbahn_munich.const import (
     DEFAULT_API_ENDPOINT_TPL,
-    DEFAULT_API_KEY,
     DEFAULT_WS_TIMEOUT,
 )
 
 
 def test_get_stations():
-    uri = DEFAULT_API_ENDPOINT_TPL.format(DEFAULT_API_KEY)
+    uri = DEFAULT_API_ENDPOINT_TPL.format($API_KEY)
     ws = open_websocket(uri, DEFAULT_WS_TIMEOUT)
     stations = sorted(get_stations(ws), key=lambda station: station.uic)
     assert len(stations) == 151
