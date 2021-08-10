@@ -5,7 +5,7 @@
   "issue_tracker": "https://github.com/eloo/sensor.sbahn_munich/issues",
   "dependencies": [],
   "config_flow": false,
-  "version": "0.0.1",
+  "version": "0.1.0",
   "codeowners": [
     "@eloo"
   ],
