@@ -129,7 +129,7 @@ class SBahnStation(Entity):
             ws = api.open_websocket(self._uri, self._timeout)
             self._timetable = api.get_timetable(ws, self._uic)
             api.close_websocket(ws)
-            if self.estimated_departure:
+            if self._timetable[0].estimated_departure:
                 self._state = self._timetable[0].estimated_departure
             else:
                 self._state = self._timetable[0].aimed_departure

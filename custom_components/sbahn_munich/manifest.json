@@ -5,14 +5,13 @@
   "issue_tracker": "https://github.com/eloo/sensor.sbahn_munich/issues",
   "dependencies": [],
   "config_flow": false,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "codeowners": [
     "@eloo"
   ],
   "requirements": [
-    "websockets==8.1",
-    "freezegun==1.1.0",
-    "websocket-client==0.58.0"
+    "websockets==10.2",
+    "websocket-client==1.2.3"
   ],
   "iot_class": "cloud_polling"
 }

@@ -1,5 +1,0 @@
-homeassistant
-pytest-homeassistant-custom-component==0.4.0
-websockets==8.1
-freezegun
-websocket-client

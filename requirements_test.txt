@@ -1,4 +1,4 @@
 pytest-homeassistant-custom-component==0.4.0
-websockets==8.1
+websockets==10.2
 freezegun
-websocket-client
+websocket-client==1.2.3
