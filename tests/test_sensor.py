@@ -38,6 +38,6 @@ def test_device_state_attributes():
         ),
     )
     entity._timetable = timetable
-    attrributes = entity.device_state_attributes
-    json.dumps(attrributes)
-    assert attrributes != None
+    attributes = entity.extra_state_attributes
+    json.dumps(attributes)
+    assert attributes != None

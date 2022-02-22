@@ -2,6 +2,7 @@
 import logging
 from datetime import timedelta
 from operator import itemgetter
+import socket
 
 from homeassistant.const import TIME_MINUTES
 
@@ -92,7 +93,7 @@ class SBahnStation(Entity):
         return self._state
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         timetables = self._timetable
         if not timetables:
@@ -106,6 +107,7 @@ class SBahnStation(Entity):
             )
         )
         limit = min(len(departures), self._limit)
+
         attr["departures"] = sorted(
             departures, key=itemgetter("raw_time", "updated_at")
         )[:limit]
@@ -123,7 +125,15 @@ class SBahnStation(Entity):
 
     def update(self):
         """Get the latest data and update the state."""
-        ws = api.open_websocket(self._uri, self._timeout)
-        self._timetable = api.get_timetable(ws, self._uic)
-        api.close_websocket(ws)
-        self._state = self._timetable[0].aimed_departure
+        try:
+            ws = api.open_websocket(self._uri, self._timeout)
+            self._timetable = api.get_timetable(ws, self._uic)
+            api.close_websocket(ws)
+            if self.estimated_departure:
+                self._state = self._timetable[0].estimated_departure
+            else:
+                self._state = self._timetable[0].aimed_departure
+            if not self._state:
+                _LOGGER.debug("Train canceled?" % self._timetable[0])
+        except socket.timeout:
+            _LOGGER.debug("Timeout while connecting to socket")

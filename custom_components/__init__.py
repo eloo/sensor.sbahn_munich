@@ -1,1 +1,1 @@
-"""SBahn Munich integration"""
+"""Custom component"""

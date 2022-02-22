@@ -2,3 +2,5 @@ __pycache__
 pythonenv*
 .pytest_cache
 .coverage
+.env
+.devcontainer/configuration.yaml

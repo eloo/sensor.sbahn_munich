@@ -1,11 +1,15 @@
 from websocket import create_connection, WebSocketTimeoutException
+import socket
 import logging
 import json
 from datetime import datetime
+from custom_components.sbahn_munich.const import (
+    CMD_GET_STATIONS,
+    CMD_GET_NEWSTICKER,
+    CMD_GET_TIMETABLE_TPL,
+)
 
 _LOGGER = logging.getLogger(__name__)
-
-from .const import CMD_GET_STATIONS, CMD_GET_NEWSTICKER, CMD_GET_TIMETABLE_TPL
 
 
 class Station:
@@ -78,6 +82,8 @@ class Timetable:
         value["raw_time"] = value["time"].total_seconds()
         value["time"] = value["time"].total_seconds() / 60
         value["product"] = "S-Bahn"
+        if not self.kwargs["updated_at"]:
+            self.kwargs["updated_at"] = 0
         value["updated_at"] = self.kwargs["updated_at"]
         return value
 
@@ -106,23 +112,28 @@ def parse_data(data):
 
 
 def open_websocket(uri, timeout):
-    _LOGGER.debug("Open websocket: {}".format(uri))
-    ws = create_connection(uri, timeout=timeout)
-    ws.recv()
-    return ws
+    try:
+        _LOGGER.debug("Open websocket: {}".format(uri))
+        websocket = create_connection(uri, timeout=timeout)
+        websocket.recv()
+    except socket.timeout:
+        _LOGGER.warning("Timeout while opening websocket")
+        raise
+    return websocket
 
 
-def send_command(ws, command):
-    ws.send(command)
+def send_command(websocket, command):
+    websocket.send(command)
     response = []
     while True:
         try:
-            data = ws.recv()
+            data = websocket.recv()
             response.append(parse_data(data))
         except WebSocketTimeoutException:
             break
     return response
 
 
-def close_websocket(ws):
-    ws.close
+def close_websocket(websocket):
+    websocket.close()
+    _LOGGER.debug("Websocket closed")
