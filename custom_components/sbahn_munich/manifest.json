@@ -10,8 +10,8 @@
     "@eloo"
   ],
   "requirements": [
-    "websockets==10.2",
-    "websocket-client==1.2.3"
+    "websockets==11.0.1",
+    "websocket-client==1.5.1"
   ],
   "iot_class": "cloud_polling"
 }
